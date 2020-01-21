@@ -10,7 +10,7 @@ exports.insertData = function(title, description, username, url) {
     return db.query(
         `INSERT INTO images (title, description, username, url)
         VALUES ($1, $2, $3, $4)
-        RETURNING id`,
+        RETURNING title, description, username, url`,
         [title, description, username, url]
     );
 };
