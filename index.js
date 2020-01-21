@@ -1,6 +1,8 @@
 const express = require("express");
 const app = express();
-const { getData } = require("./db");
+const { getData, insertData } = require("./db");
+const s3 = require("./s3");
+const { s3Url } = require("./config");
 
 app.use(express.static("./public"));
 
@@ -38,20 +40,23 @@ app.get("/images", (req, res) => {
     });
 });
 
-app.post("/upload", uploader.single("file"), (req, res) => {
+app.post("/upload", uploader.single("file"), s3.upload, (req, res) => {
     console.log("file: ", req.file);
     console.log("input: ", req.body);
+    let title = req.body.title,
+        description = req.body.description,
+        username = req.body.username,
+        url = s3Url + req.file.filename;
 
-    if (req.file) {
-        ////// you'll eventually want to make a db insert here
-        res.json({
-            success: true
+    ////// you'll eventually want to make a db insert here
+    insertData(title, description, username, url)
+        .then(response => {
+            res.json(response.rows[0]);
+        })
+        .catch(err => {
+            console.log("Error in insertData: ", err);
+            res.sendStatus(500);
         });
-    } else {
-        res.json({
-            success: true
-        });
-    }
 });
 
 app.listen(8080, () => console.log("I'm listening."));

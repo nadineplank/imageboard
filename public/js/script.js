@@ -16,7 +16,7 @@
             console.log("mounted");
             axios.get("/images").then(res => {
                 console.log("Response: ", res.data);
-                this.images = res.data;
+                this.images = res.data.reverse();
                 this.name = res.data;
             });
         },
@@ -26,6 +26,7 @@
 
         methods: {
             handleClick: function(e) {
+                var vueInstance = this;
                 e.preventDefault();
                 console.log("this: ", this);
 
@@ -40,6 +41,7 @@
                     .post("/upload", formData)
                     .then(function(resp) {
                         console.log("resp from POST /upload: ", resp);
+                        vueInstance.images.unshift(resp.data);
                     })
                     .catch(function(err) {
                         console.log("err in POST /upload: ", err);
