@@ -3,21 +3,66 @@
     margin: 0;
 }
 
-img {
-    height: 300px;
+#main {
 }
 
+.fa,
+.fas {
+    font-weight: 900;
+    padding: 5px;
+}
+
+img {
+    height: 300px;
+    object-fit: cover;
+}
+
+input {
+    margin: 10px;
+    border: none;
+    border-bottom: 1px solid grey;
+    padding: 8px;
+    font-size: 11px;
+}
+
+button {
+    border-radius: 5px;
+    margin: 5px;
+    padding: 10px;
+    font-family: "Unica One", cursive;
+    font-size: 15px;
+}
+
+h1 {
+    font-family: "Unica One", cursive;
+    text-align: center;
+    font-size: 70px;
+    margin-top: 30px;
+    margin-bottom: 45px;
+}
+
+h2 {
+    margin-left: 120px;
+    font-family: "Montserrat", sans-serif;
+}
+
+form {
+    display: flex;
+    justify-content: center;
+    margin: 40px;
+}
 .container {
     display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
+    flex-flow: row wrap;
+    justify-content: space-evenly;
+    margin: 20px;
 }
 
 .imgContainer {
-    height: 350px;
-    max-width: 400px;
+    height: 370px;
+    width: 370px;
     border: 2px black solid;
-    margin: 10px;
+    margin: 30px;
     padding: 10px;
     display: flex;
     flex-direction: column;
@@ -25,7 +70,43 @@ img {
 
 .name {
     border-top: 1px black solid;
-    margin: 5px;
-    padding: 5px;
+    margin-top: 10px;
+    padding-top: 10px;
     text-align: center;
+    font-family: "Unica One", cursive;
+    font-size: 20px;
+}
+
+/*     UPLOAD BUTTON      */
+
+.inputfile {
+    width: 0.1px;
+    height: 0.1px;
+    opacity: 0;
+    overflow: hidden;
+    position: absolute;
+    z-index: -1;
+}
+
+.inputfile + label {
+    font-size: 1.25em;
+    font-weight: 700;
+    color: white;
+    background-color: gold;
+    display: inline-block;
+    cursor: pointer;
+    padding: 5px 10px;
+    margin: 5px;
+    border-radius: 5px;
+    font-family: "Unica One", cursive;
+}
+
+.inputfile:focus + label,
+.inputfile + label:hover {
+    background-color: orange;
+}
+
+.inputfile:focus + label {
+    outline: 1px dotted #000;
+    outline: -webkit-focus-ring-color auto 5px;
 }
