@@ -1,0 +1,31 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+}
+
+img {
+    height: 300px;
+}
+
+.container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.imgContainer {
+    height: 350px;
+    max-width: 400px;
+    border: 2px black solid;
+    margin: 10px;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+}
+
+.name {
+    border-top: 1px black solid;
+    margin: 5px;
+    padding: 5px;
+    text-align: center;
+}
