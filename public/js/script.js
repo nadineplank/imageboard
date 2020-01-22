@@ -1,13 +1,50 @@
 (function() {
+    Vue.component("first-component", {
+        template: "#template",
+        props: ["postTitle", "id"],
+        data: function() {
+            return {
+                name: "Nadine",
+                count: 0
+            };
+        },
+        mounted: function() {
+            console.log("component mounted: ");
+            console.log("my postTitle: ", this.postTitle);
+            console.log("id: ", this.id);
+        },
+        methods: {
+            closeModal: function() {
+                console.log("sanity check click worked!!");
+                this.$emit("close", this.count);
+            }
+        }
+    });
+
     new Vue({
         el: "#main",
         data: {
+            selectedFruit: null,
             images: null,
             name: null,
             title: "",
             description: "",
             username: "",
-            file: null
+            file: null,
+            fruits: [
+                {
+                    title: "🥝",
+                    id: 1
+                },
+                {
+                    title: "🍓",
+                    id: 2
+                },
+                {
+                    title: "🍋",
+                    id: 3
+                }
+            ]
         },
         created: function() {
             console.log("created");
@@ -15,7 +52,6 @@
         mounted: function() {
             console.log("mounted");
             axios.get("/images").then(res => {
-                console.log("Response: ", res.data);
                 this.images = res.data.reverse();
                 this.name = res.data;
             });
@@ -51,6 +87,11 @@
                 console.log("handleChange is running");
                 console.log("file: ", e.target.files[0]);
                 this.file = e.target.files[0];
+            },
+            closeMe: function(count) {
+                console.log("i need to close the modal ", count);
+                ///// in here we can update the value of selectedFruit
+                this.selectedFruit = null;
             }
         }
     });

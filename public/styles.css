@@ -1,9 +1,16 @@
 * {
     box-sizing: border-box;
     margin: 0;
+    font-family: "Montserrat", sans-serif;
 }
 
-#main {
+.fruit {
+    font-size: 200px;
+}
+
+footer {
+    margin: 5px;
+    font-size: 14px;
 }
 
 .fa,
@@ -31,6 +38,20 @@ button {
     padding: 10px;
     font-family: "Unica One", cursive;
     font-size: 15px;
+    cursor: pointer;
+}
+
+button:hover {
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.4);
+}
+
+.component {
+    background-color: rgba(0, 0, 0, 0.4);
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
 }
 
 h1 {
@@ -55,7 +76,7 @@ form {
     display: flex;
     flex-flow: row wrap;
     justify-content: space-evenly;
-    margin: 20px;
+    margin: 0 30px;
 }
 
 .imgContainer {
@@ -103,7 +124,7 @@ form {
 
 .inputfile:focus + label,
 .inputfile + label:hover {
-    background-color: orange;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.8);
 }
 
 .inputfile:focus + label {
