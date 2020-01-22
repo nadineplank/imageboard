@@ -4,19 +4,48 @@
         props: ["postTitle", "id"],
         data: function() {
             return {
-                name: "Nadine",
-                count: 0
+                username: "",
+                images: null,
+                title: "",
+                description: "",
+                comment: null,
+                commentuser: "",
+                comments: []
             };
         },
         mounted: function() {
             console.log("component mounted: ");
             console.log("my postTitle: ", this.postTitle);
             console.log("id: ", this.id);
+            axios.get("/images/" + this.id).then(res => {
+                console.log("response: ", res.data);
+                this.username = res.data;
+                this.images = res.data;
+                this.title = res.data;
+                this.description = res.data;
+            });
+            axios.get("/comment/" + this.id).then(res => {
+                console.log("response from get Comment: ", res.data);
+                for (var i in res.data) {
+                    this.comments.push(res.data[i]);
+                }
+            });
         },
         methods: {
             closeModal: function() {
                 console.log("sanity check click worked!!");
-                this.$emit("close", this.count);
+                this.$emit("close");
+            },
+            handleComment: function(e) {
+                var vueInstance = this;
+                var id = this.id,
+                    username = this.commentuser,
+                    comment = this.comment;
+                e.preventDefault();
+                axios.post(`comment/${id}/${username}/${comment}`).then(res => {
+                    console.log("Response from handleComment: ", res);
+                    vueInstance.comments.push(res.data);
+                });
             }
         }
     });
@@ -24,27 +53,13 @@
     new Vue({
         el: "#main",
         data: {
-            selectedFruit: null,
+            selectedImage: null,
             images: null,
             name: null,
             title: "",
             description: "",
             username: "",
-            file: null,
-            fruits: [
-                {
-                    title: "🥝",
-                    id: 1
-                },
-                {
-                    title: "🍓",
-                    id: 2
-                },
-                {
-                    title: "🍋",
-                    id: 3
-                }
-            ]
+            file: null
         },
         created: function() {
             console.log("created");
@@ -53,7 +68,7 @@
             console.log("mounted");
             axios.get("/images").then(res => {
                 this.images = res.data.reverse();
-                this.name = res.data;
+                this.title = res.data;
             });
         },
         // updated: function() {
@@ -88,10 +103,11 @@
                 console.log("file: ", e.target.files[0]);
                 this.file = e.target.files[0];
             },
-            closeMe: function(count) {
-                console.log("i need to close the modal ", count);
-                ///// in here we can update the value of selectedFruit
-                this.selectedFruit = null;
+
+            closeMe: function() {
+                console.log("i need to close the modal ");
+                ///// in here we can update the value of selectedImage
+                this.selectedImage = null;
             }
         }
     });

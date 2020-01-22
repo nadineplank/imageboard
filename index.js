@@ -1,6 +1,12 @@
 const express = require("express");
 const app = express();
-const { getData, insertData } = require("./db");
+const {
+    getData,
+    insertData,
+    getImage,
+    insertComment,
+    getComments
+} = require("./db");
 const s3 = require("./s3");
 const { s3Url } = require("./config");
 
@@ -56,6 +62,41 @@ app.post("/upload", uploader.single("file"), s3.upload, (req, res) => {
         .catch(err => {
             console.log("Error in insertData: ", err);
             res.sendStatus(500);
+        });
+});
+
+app.get("/images/:id", (req, res) => {
+    getImage(req.params.id)
+        .then(rows => {
+            res.json(rows);
+        })
+        .catch(err => {
+            console.log("Error in get Image: ", err);
+            res.sendStatus(500);
+        });
+});
+
+app.post("/comment/:id/:username/:comments", (req, res) => {
+    let username = req.params.username,
+        comments = req.params.comments,
+        id = req.params.id;
+
+    insertComment(username, comments, id)
+        .then(response => {
+            res.json(response.rows[0]);
+        })
+        .catch(err => {
+            console.log("Error in insertComment: ", err);
+        });
+});
+
+app.get("/comment/:id", (req, res) => {
+    getComments(req.params.id)
+        .then(rows => {
+            res.json(rows);
+        })
+        .catch(err => {
+            console.log("Error in getComments: ", err);
         });
 });
 
