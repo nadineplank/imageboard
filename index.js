@@ -1,11 +1,12 @@
 const express = require("express");
 const app = express();
 const {
-    getData,
+    getImages,
     insertData,
-    getImage,
+    getData,
     insertComment,
-    getComments
+    getComments,
+    getMoreImages
 } = require("./db");
 const s3 = require("./s3");
 const { s3Url } = require("./config");
@@ -41,14 +42,12 @@ const uploader = multer({
 app.use(express.json());
 
 app.get("/images", (req, res) => {
-    getData().then(rows => {
+    getImages().then(rows => {
         res.json(rows);
     });
 });
 
 app.post("/upload", uploader.single("file"), s3.upload, (req, res) => {
-    console.log("file: ", req.file);
-    console.log("input: ", req.body);
     let title = req.body.title,
         description = req.body.description,
         username = req.body.username,
@@ -66,7 +65,7 @@ app.post("/upload", uploader.single("file"), s3.upload, (req, res) => {
 });
 
 app.get("/images/:id", (req, res) => {
-    getImage(req.params.id)
+    getData(req.params.id)
         .then(rows => {
             res.json(rows);
         })
@@ -97,6 +96,16 @@ app.get("/comment/:id", (req, res) => {
         })
         .catch(err => {
             console.log("Error in getComments: ", err);
+        });
+});
+
+app.get("/more/:lastId", (req, res) => {
+    getMoreImages(req.params.lastId)
+        .then(rows => {
+            res.json(rows);
+        })
+        .catch(err => {
+            console.log("Error in getMoreImages: ", err);
         });
 });
 

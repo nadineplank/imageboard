@@ -16,31 +16,34 @@
 
         <first-component
             v-if='selectedImage'
-            post-title='My amazing article'
             :id='selectedImage'
             @close='closeMe'
-
-
         ></first-component>
 
 
 
         <form>
-            <input v-model='name' type="text" name="title" placeholder="title">
+            <input v-model='title' type="text" name="title" placeholder="title">
             <input v-model='description' type="text" name="description" placeholder="description">
             <input v-model='username' type="text" name="username" placeholder="username">
             <input class="inputfile" @change='handleChange' type="file" id='file' name="file" accept='image/*' data-multiple-caption="{count} files selected" multiple>
             <label for="file"><i class="fas fa-upload"></i>Choose a file..</label>
-            <button @click='handleClick'>SUBMIT</button>
+            <button @click='upload'>SUBMIT</button>
         </form>
 
             <h2>Latest Images</h2>
             <div class="container">
 
-                <div class="imgContainer" v-for='i in images'>
-                    <img :src="i.url" @click='selectedImage = i.id'>
-                    <p class='title'>{{i.title}}</p>
+                <div  v-for='i in images'>
+                    <a class="imgContainer" :href="'#' + i.id">
+                        <img :src="i.url">
+                        <p class='title' id='title'>{{i.title}}</p>
+                    </a>
                 </div>
+            </div>
+            <div v-if='lastId' id="more">
+                <button id='moreButton' @click='loadMore'>show more</button>
+
             </div>
     </div>
 
@@ -50,24 +53,27 @@
         <div class='component'>
             <i @click='closeModal'class="fas fa-times"></i>
 
-            <div class='container' v-for='i in images'>
-                <img :src="i.url">
-                <h3 class='title'>{{i.title}}</h3>
-                <p class='username'>user: {{i.username}}</p>
-                <p class='description'>description: {{i.description}}</p>
+            <div class='componentContainer' v-for='i in images'>
+                <div class="imageContainer">
+                    <img :src="i.url">
+                    <h3 class='title'>{{i.title}}</h3>
+                    <p class='username'>user: {{i.username}}</p>
+                    <p class='description'>description: {{i.description}}</p>
+                </div>
 
                 <form>
-                    <input v-model='commentuser' type="text" name="user" placeholder="username">
-                    <input  v-model='comment' type="text" name="comment" placeholder="comment">
-                    <button @click='handleComment'>SUBMIT</button>
+                    <input v-model='commentuser'class='buttonbox' type="text" name="user" placeholder="username">
+                    <input  v-model='comment' type="text" name="comment" placeholder="comment" class='comment'>
+                    <button class='buttonbox' @click='handleComment'>SUBMIT</button>
+                </form>
 
-            <div class='commentContainer' v-for='c in comments'>
-                <p>{{c.comment}}</p>
-                <p>posted by: {{c.username}}</p>
 
+            <div class='commentBox'>
+                <div class='commentContainer' v-for='c in comments'>
+                    <p>{{c.comment}}</p>
+                    <p>posted by: {{c.username}}</p>
+                </div>
             </div>
-        </form>
-
         </div>
     </div>
     </script>

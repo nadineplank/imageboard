@@ -2,9 +2,30 @@ const spicedPg = require("spiced-pg");
 
 const db = spicedPg("postgres:postgres:postgres@localhost:5432/imageboard");
 
-exports.getData = function() {
+exports.getImages = function() {
     return db
-        .query(`SELECT url, title, id FROM images`)
+        .query(
+            `SELECT url, title, id
+            FROM images
+            ORDER BY id DESC
+            LIMIT 9;`
+        )
+        .then(({ rows }) => rows);
+};
+
+exports.getMoreImages = function(lastId) {
+    return db
+        .query(
+            `SELECT id, url, title, (
+            SELECT id FROM images
+            ORDER BY id ASC
+            LIMIT 1
+        ) AS "lowestId" FROM images
+        WHERE id < $1
+        ORDER BY id DESC
+        LIMIT 9`,
+            [lastId]
+        )
         .then(({ rows }) => rows);
 };
 
@@ -17,8 +38,7 @@ exports.insertData = function(title, description, username, url) {
     );
 };
 
-exports.getImage = function(id) {
-    console.log("Result from getImage: ", id);
+exports.getData = function(id) {
     return db
         .query(
             `SELECT url, title, username, description FROM images WHERE id=${id}`

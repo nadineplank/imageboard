@@ -1,7 +1,7 @@
 (function() {
     Vue.component("first-component", {
         template: "#template",
-        props: ["postTitle", "id"],
+        props: ["id"],
         data: function() {
             return {
                 username: "",
@@ -14,9 +14,6 @@
             };
         },
         mounted: function() {
-            console.log("component mounted: ");
-            console.log("my postTitle: ", this.postTitle);
-            console.log("id: ", this.id);
             axios.get("/images/" + this.id).then(res => {
                 console.log("response: ", res.data);
                 this.username = res.data;
@@ -24,12 +21,21 @@
                 this.title = res.data;
                 this.description = res.data;
             });
+
             axios.get("/comment/" + this.id).then(res => {
                 console.log("response from get Comment: ", res.data);
                 for (var i in res.data) {
                     this.comments.push(res.data[i]);
                 }
             });
+        },
+        watch: {
+            id: function() {
+                // in here we want to do exactly the same as we did in mounted
+                // another problem we need to deal with is of the user tries to go to an image that doesn't exist
+                //we probably want to look at the response from the server
+                //if the response is a certain thing... close the modal
+            }
         },
         methods: {
             closeModal: function() {
@@ -53,30 +59,37 @@
     new Vue({
         el: "#main",
         data: {
-            selectedImage: null,
-            images: null,
-            name: null,
+            selectedImage: location.hash.slice(1),
+            images: [],
             title: "",
             description: "",
             username: "",
-            file: null
+            file: null,
+            lastId: true
         },
         created: function() {
             console.log("created");
         },
         mounted: function() {
+            var self = this;
+            addEventListener("hashchange", function() {
+                self.selectedImage = location.hash.slice(1);
+            });
             console.log("mounted");
             axios.get("/images").then(res => {
-                this.images = res.data.reverse();
-                this.title = res.data;
+                this.images = res.data;
             });
         },
-        // updated: function() {
-        //     console.log("updated", this.greetee);
-        // },
+        updated: function() {
+            var lastId = this.images[this.images.length - 1].id;
+            if (lastId <= "1") {
+                this.lastId = false;
+                console.log(this.lastId);
+            }
+        },
 
         methods: {
-            handleClick: function(e) {
+            upload: function(e) {
                 var vueInstance = this;
                 e.preventDefault();
                 console.log("this: ", this);
@@ -105,9 +118,24 @@
             },
 
             closeMe: function() {
-                console.log("i need to close the modal ");
                 ///// in here we can update the value of selectedImage
                 this.selectedImage = null;
+                history.replaceState(null, null, " ");
+            },
+
+            loadMore: function() {
+                var lastId = this.images[this.images.length - 1].id;
+                console.log(lastId);
+                axios
+                    .get("/more/" + lastId)
+                    .then(res => {
+                        for (let i in res.data) {
+                            this.images.push(res.data[i]);
+                        }
+                    })
+                    .catch(err => {
+                        console.log("error in loadMore: ", err);
+                    });
             }
         }
     });
