@@ -4,8 +4,22 @@
     font-family: "Montserrat", sans-serif;
 }
 
-.fruit {
-    font-size: 200px;
+a {
+    text-decoration: none;
+    color: black;
+}
+
+#title:hover {
+    color: slategray;
+}
+
+#more {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#moreButton {
 }
 
 footer {
@@ -49,10 +63,35 @@ button:hover {
     border: 2px solid black;
     background-color: white;
     position: fixed;
-    top: 40px;
-    right: 40px;
-    bottom: 40px;
-    left: 40px;
+    top: 20px;
+    right: 20px;
+    bottom: 20px;
+    left: 20px;
+    padding: 25px;
+}
+
+.componentContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.comment {
+    height: 100px;
+    background-color: rgba(0, 0, 0, 0.1);
+    border: none;
+}
+
+.commentBox {
+    overflow-y: scroll;
+    width: 90%;
+    height: 100px;
+}
+
+.buttonbox {
+    height: 50px;
+    align-self: flex-end;
+    margin: 15px;
 }
 
 h1 {
@@ -67,7 +106,11 @@ h2 {
     margin-left: 120px;
     font-family: "Montserrat", sans-serif;
 }
-
+h3 {
+    font-size: 25px;
+    padding: 7px;
+    font-family: "Unica One", cursive;
+}
 form {
     display: flex;
     justify-content: center;
@@ -90,7 +133,7 @@ form {
     flex-direction: column;
 }
 
-.name {
+.title {
     border-top: 1px black solid;
     margin-top: 10px;
     padding-top: 10px;
@@ -100,9 +143,11 @@ form {
 }
 
 .fa-times {
-    float: right;
     font-size: 25px;
     margin: 5px;
+    position: absolute;
+    right: 5px;
+    top: 5px;
 }
 
 /*     UPLOAD BUTTON      */
