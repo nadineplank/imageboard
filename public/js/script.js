@@ -10,7 +10,8 @@
                 description: "",
                 comment: null,
                 commentuser: "",
-                comments: []
+                comments: [],
+                id: ""
             };
         },
         mounted: function() {
@@ -32,6 +33,21 @@
         watch: {
             id: function() {
                 // in here we want to do exactly the same as we did in mounted
+
+                axios.get("/images/" + this.id).then(res => {
+                    console.log("response: ", res.data);
+                    this.username = res.data;
+                    this.images = res.data;
+                    this.title = res.data;
+                    this.description = res.data;
+                });
+
+                axios.get("/comment/" + this.id).then(res => {
+                    console.log("response from get Comment: ", res.data);
+                    for (var i in res.data) {
+                        this.comments.push(res.data[i]);
+                    }
+                });
                 // another problem we need to deal with is of the user tries to go to an image that doesn't exist
                 //we probably want to look at the response from the server
                 //if the response is a certain thing... close the modal
@@ -84,7 +100,6 @@
             var lastId = this.images[this.images.length - 1].id;
             if (lastId <= "1") {
                 this.lastId = false;
-                console.log(this.lastId);
             }
         },
 
@@ -127,7 +142,7 @@
                 var lastId = this.images[this.images.length - 1].id;
                 console.log(lastId);
                 axios
-                    .get("/more/" + lastId)
+                    .get(lastId)
                     .then(res => {
                         for (let i in res.data) {
                             this.images.push(res.data[i]);

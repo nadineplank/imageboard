@@ -99,7 +99,7 @@ app.get("/comment/:id", (req, res) => {
         });
 });
 
-app.get("/more/:lastId", (req, res) => {
+app.get("more/:lastId", (req, res) => {
     getMoreImages(req.params.lastId)
         .then(rows => {
             res.json(rows);
