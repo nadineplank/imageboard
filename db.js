@@ -29,6 +29,36 @@ exports.getMoreImages = function(lastId) {
         .then(({ rows }) => rows);
 };
 
+exports.getPrevious = function(id) {
+    return db
+        .query(
+            `SELECT id, url, title, (
+            SELECT id FROM images
+            ORDER BY id ASC
+            LIMIT 1
+        ) AS "id" FROM images
+        WHERE id > $1
+        LIMIT 1`,
+            [id]
+        )
+        .then(({ rows }) => rows);
+};
+
+exports.getNext = function(id) {
+    return db
+        .query(
+            `SELECT id, url, title, (
+            SELECT id FROM images
+            ORDER BY id ASC
+            LIMIT 1
+        ) AS "id" FROM images
+        WHERE id < $1
+        LIMIT 1`,
+            [id]
+        )
+        .then(({ rows }) => rows);
+};
+
 exports.insertData = function(title, description, username, url) {
     return db.query(
         `INSERT INTO images (title, description, username, url)

@@ -18,6 +18,8 @@
             v-if='selectedImage'
             :id='selectedImage'
             @close='closeMe'
+            @next='next'
+            @previous='previous'
         ></first-component>
 
 
@@ -54,25 +56,29 @@
             <i @click='closeModal'class="fas fa-times"></i>
 
             <div class='componentContainer' v-for='i in images'>
+                <i class="fas fa-chevron-left arrow" @click='previousImage'></i>
                 <div class="imageContainer">
-                    <img :src="i.url">
+                    <img class='selected' :src="i.url">
                     <h3 class='title'>{{i.title}}</h3>
-                    <p class='username'>user: {{i.username}}</p>
                     <p class='description'>description: {{i.description}}</p>
+                    <p class='username'>user: {{i.username}}</p>
+                </div>
+
+            <div class="commentContainer">
+
+                <div class='comment' v-for='c in comments'>
+                    <p>{{c.comment}}</p>
+                    <p id="postedBy" >posted by: {{c.username}}</p>
                 </div>
 
                 <form>
                     <input v-model='commentuser'class='buttonbox' type="text" name="user" placeholder="username">
-                    <input  v-model='comment' type="text" name="comment" placeholder="comment" class='comment'>
-                    <button class='buttonbox' @click='handleComment'>SUBMIT</button>
+                    <input  v-model='comment' type="text" name="comment" placeholder="comment" class='commentInput'>
+                    <button class='buttonbox' @click='addComment'>SUBMIT</button>
                 </form>
-
-
-            <div class='commentBox'>
-                <div class='commentContainer' v-for='c in comments'>
-                    <p>{{c.comment}}</p>
-                    <p>posted by: {{c.username}}</p>
-                </div>
+                <i class="fas fa-chevron-right arrow"
+                @click='nextImage'
+                ></i>
             </div>
         </div>
     </div>

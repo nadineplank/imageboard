@@ -10,63 +10,62 @@
                 description: "",
                 comment: null,
                 commentuser: "",
-                comments: [],
-                id: ""
+                comments: []
             };
         },
         mounted: function() {
-            axios.get("/images/" + this.id).then(res => {
-                console.log("response: ", res.data);
-                this.username = res.data;
-                this.images = res.data;
-                this.title = res.data;
-                this.description = res.data;
-            });
-
-            axios.get("/comment/" + this.id).then(res => {
-                console.log("response from get Comment: ", res.data);
-                for (var i in res.data) {
-                    this.comments.push(res.data[i]);
-                }
-            });
+            this.modal();
         },
         watch: {
             id: function() {
                 // in here we want to do exactly the same as we did in mounted
-
-                axios.get("/images/" + this.id).then(res => {
-                    console.log("response: ", res.data);
-                    this.username = res.data;
-                    this.images = res.data;
-                    this.title = res.data;
-                    this.description = res.data;
-                });
-
-                axios.get("/comment/" + this.id).then(res => {
-                    console.log("response from get Comment: ", res.data);
-                    for (var i in res.data) {
-                        this.comments.push(res.data[i]);
-                    }
-                });
-                // another problem we need to deal with is of the user tries to go to an image that doesn't exist
-                //we probably want to look at the response from the server
-                //if the response is a certain thing... close the modal
+                this.modal();
             }
         },
         methods: {
+            nextImage: function() {
+                console.log("next click worked!");
+                this.$emit("next");
+            },
+            previousImage: function() {
+                console.log("previous click worked!");
+                this.$emit("previous");
+            },
             closeModal: function() {
                 console.log("sanity check click worked!!");
                 this.$emit("close");
             },
-            handleComment: function(e) {
+            addComment: function(e) {
                 var vueInstance = this;
                 var id = this.id,
                     username = this.commentuser,
                     comment = this.comment;
                 e.preventDefault();
                 axios.post(`comment/${id}/${username}/${comment}`).then(res => {
-                    console.log("Response from handleComment: ", res);
+                    console.log("Response from addComment: ", res);
                     vueInstance.comments.push(res.data);
+                });
+            },
+            modal: function() {
+                // another problem we need to deal with is of the user tries to go to an image that doesn't exist
+                axios.get("/images/" + this.id).then(res => {
+                    //we probably want to look at the response from the server
+                    //if the response is a certain thing... close the modal
+                    if (res.data.length === 0) {
+                        this.$emit("close");
+                    } else {
+                        console.log("response: ", res.data);
+                        this.username = res.data;
+                        this.images = res.data;
+                        this.title = res.data;
+                        this.description = res.data;
+                    }
+                });
+                axios.get("/comment/" + this.id).then(res => {
+                    console.log("response from get Comment: ", res.data);
+                    for (var i in res.data) {
+                        this.comments.push(res.data[i]);
+                    }
                 });
             }
         }
@@ -142,7 +141,7 @@
                 var lastId = this.images[this.images.length - 1].id;
                 console.log(lastId);
                 axios
-                    .get(lastId)
+                    .get("/more/" + lastId)
                     .then(res => {
                         for (let i in res.data) {
                             this.images.push(res.data[i]);
@@ -151,6 +150,28 @@
                     .catch(err => {
                         console.log("error in loadMore: ", err);
                     });
+            },
+            previous: function() {
+                var id = this.selectedImage;
+                console.log("Id for previous method:", id);
+                axios.get("/previous/" + id).then(res => {
+                    console.log("response: ", res.data);
+                    this.username = res.data;
+                    this.images = res.data;
+                    this.title = res.data;
+                    this.description = res.data;
+                });
+            },
+            next: function() {
+                var id = this.selectedImage;
+                console.log("id for next method: ", id);
+                axios.get("/next/" + id).then(res => {
+                    console.log("response: ", res.data);
+                    this.username = res.data;
+                    this.images = res.data;
+                    this.title = res.data;
+                    this.description = res.data;
+                });
             }
         }
     });

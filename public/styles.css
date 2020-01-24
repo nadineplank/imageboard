@@ -4,6 +4,8 @@
     font-family: "Montserrat", sans-serif;
 }
 
+/* MAIN */
+
 a {
     text-decoration: none;
     color: black;
@@ -12,25 +14,15 @@ a {
 #title:hover {
     color: slategray;
 }
-
-#more {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-#moreButton {
+.fa,
+.fas {
+    font-weight: 900;
+    padding: 5px;
 }
 
 footer {
     margin: 5px;
     font-size: 14px;
-}
-
-.fa,
-.fas {
-    font-weight: 900;
-    padding: 5px;
 }
 
 img {
@@ -57,35 +49,6 @@ button {
 
 button:hover {
     box-shadow: 0 5px 10px rgba(0, 0, 0, 0.4);
-}
-
-.component {
-    border: 2px solid black;
-    background-color: white;
-    position: fixed;
-    top: 20px;
-    right: 20px;
-    bottom: 20px;
-    left: 20px;
-    padding: 25px;
-}
-
-.componentContainer {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.comment {
-    height: 100px;
-    background-color: rgba(0, 0, 0, 0.1);
-    border: none;
-}
-
-.commentBox {
-    overflow-y: scroll;
-    width: 90%;
-    height: 100px;
 }
 
 .buttonbox {
@@ -150,6 +113,55 @@ form {
     top: 5px;
 }
 
+/* MODAL */
+
+.selected {
+    height: 500px;
+}
+
+.component {
+    border: 2px solid black;
+    background-color: white;
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    bottom: 20px;
+    left: 20px;
+    padding: 25px;
+}
+
+.componentContainer {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+}
+
+.imageContainer {
+    padding-right: 25px;
+}
+
+.comment {
+    background-color: rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    padding: 8px;
+}
+
+.commentContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+}
+
+.commentInput {
+    height: 100px;
+    background-color: rgba(0, 0, 0, 0.1);
+    border: none;
+}
+
+#postedBy {
+    font-size: 13px;
+    color: dimgray;
+}
+
 /*     UPLOAD BUTTON      */
 
 .inputfile {
@@ -182,4 +194,14 @@ form {
 .inputfile:focus + label {
     outline: 1px dotted #000;
     outline: -webkit-focus-ring-color auto 5px;
+}
+
+/* MORE */
+#more {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#moreButton {
 }

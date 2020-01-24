@@ -6,7 +6,9 @@ const {
     getData,
     insertComment,
     getComments,
-    getMoreImages
+    getMoreImages,
+    getPrevious,
+    getNext
 } = require("./db");
 const s3 = require("./s3");
 const { s3Url } = require("./config");
@@ -99,13 +101,34 @@ app.get("/comment/:id", (req, res) => {
         });
 });
 
-app.get("more/:lastId", (req, res) => {
+app.get("/more/:lastId", (req, res) => {
     getMoreImages(req.params.lastId)
         .then(rows => {
             res.json(rows);
         })
         .catch(err => {
             console.log("Error in getMoreImages: ", err);
+        });
+});
+
+app.get("/previous/:id", (req, res) => {
+    getPrevious(req.params.id)
+        .then(response => {
+            console.log("Response from getPrevious: ", response);
+            res.json(response);
+        })
+        .catch(err => {
+            console.log("Error in getPrevious: ", err);
+        });
+});
+
+app.get("/next/:id", (req, res) => {
+    getNext(req.params.id)
+        .then(response => {
+            res.json(response);
+        })
+        .catch(err => {
+            console.log("Error in get Next: ", err);
         });
 });
 
