@@ -10,7 +10,9 @@
                 description: "",
                 comment: null,
                 commentuser: "",
-                comments: []
+                comments: [],
+                leftId: null,
+                rightId: null
             };
         },
         mounted: function() {
@@ -23,16 +25,7 @@
             }
         },
         methods: {
-            nextImage: function() {
-                console.log("next click worked!");
-                this.$emit("next");
-            },
-            previousImage: function() {
-                console.log("previous click worked!");
-                this.$emit("previous");
-            },
             closeModal: function() {
-                console.log("sanity check click worked!!");
                 this.$emit("close");
             },
             addComment: function(e) {
@@ -42,30 +35,59 @@
                     comment = this.comment;
                 e.preventDefault();
                 axios.post(`comment/${id}/${username}/${comment}`).then(res => {
-                    console.log("Response from addComment: ", res);
                     vueInstance.comments.push(res.data);
                 });
             },
             modal: function() {
                 // another problem we need to deal with is of the user tries to go to an image that doesn't exist
+                this.comments = [];
                 axios.get("/images/" + this.id).then(res => {
                     //we probably want to look at the response from the server
                     //if the response is a certain thing... close the modal
-                    if (res.data.length === 0) {
+                    if (res.data.length === "") {
                         this.$emit("close");
                     } else {
-                        console.log("response: ", res.data);
-                        this.username = res.data;
-                        this.images = res.data;
-                        this.title = res.data;
-                        this.description = res.data;
+                        this.username = res.data.username;
+                        this.images = res.data.url;
+                        this.title = res.data.title;
+                        this.description = res.data.description;
+                        this.leftId = res.data.left_id;
+                        this.rightId = res.data.right_id;
+
+                        // this.leftId = res.data.left_id;
+                        // this.rightId = res.data.right_id;
                     }
                 });
                 axios.get("/comment/" + this.id).then(res => {
-                    console.log("response from get Comment: ", res.data);
                     for (var i in res.data) {
                         this.comments.push(res.data[i]);
                     }
+                });
+            },
+            previous: function() {
+                var self = this;
+                var id = location.hash.slice(1);
+                console.log("Id for previous method:", id);
+                axios.get("/images/" + id).then(res => {
+                    console.log("response previous: ", res.data);
+
+                    self.username = res.data.username;
+                    self.images = res.data.url;
+                    self.title = res.data.title;
+                    self.description = res.data.description;
+                    self.leftId = res.data.left_id;
+                });
+            },
+            next: function() {
+                var id = location.hash.slice(1);
+                console.log("id for next method: ", id);
+                axios.get("/images/" + id).then(res => {
+                    console.log("response next: ", res.data);
+                    this.username = res.data.username;
+                    this.images = res.data.url;
+                    this.title = res.data.title;
+                    this.description = res.data.description;
+                    this.rightId = res.data.right_id;
                 });
             }
         }
@@ -150,28 +172,6 @@
                     .catch(err => {
                         console.log("error in loadMore: ", err);
                     });
-            },
-            previous: function() {
-                var id = this.selectedImage;
-                console.log("Id for previous method:", id);
-                axios.get("/previous/" + id).then(res => {
-                    console.log("response: ", res.data);
-                    this.username = res.data;
-                    this.images = res.data;
-                    this.title = res.data;
-                    this.description = res.data;
-                });
-            },
-            next: function() {
-                var id = this.selectedImage;
-                console.log("id for next method: ", id);
-                axios.get("/next/" + id).then(res => {
-                    console.log("response: ", res.data);
-                    this.username = res.data;
-                    this.images = res.data;
-                    this.title = res.data;
-                    this.description = res.data;
-                });
             }
         }
     });

@@ -6,9 +6,7 @@ const {
     getData,
     insertComment,
     getComments,
-    getMoreImages,
-    getPrevious,
-    getNext
+    getMoreImages
 } = require("./db");
 const s3 = require("./s3");
 const { s3Url } = require("./config");
@@ -44,9 +42,13 @@ const uploader = multer({
 app.use(express.json());
 
 app.get("/images", (req, res) => {
-    getImages().then(rows => {
-        res.json(rows);
-    });
+    getImages()
+        .then(rows => {
+            res.json(rows);
+        })
+        .catch(err => {
+            console.log("error in getImages: ", err);
+        });
 });
 
 app.post("/upload", uploader.single("file"), s3.upload, (req, res) => {
@@ -69,10 +71,10 @@ app.post("/upload", uploader.single("file"), s3.upload, (req, res) => {
 app.get("/images/:id", (req, res) => {
     getData(req.params.id)
         .then(rows => {
-            res.json(rows);
+            res.json(rows[0]);
         })
         .catch(err => {
-            console.log("Error in get Image: ", err);
+            console.log("Error in getData: ", err);
             res.sendStatus(500);
         });
 });
@@ -111,25 +113,25 @@ app.get("/more/:lastId", (req, res) => {
         });
 });
 
-app.get("/previous/:id", (req, res) => {
-    getPrevious(req.params.id)
-        .then(response => {
-            console.log("Response from getPrevious: ", response);
-            res.json(response);
-        })
-        .catch(err => {
-            console.log("Error in getPrevious: ", err);
-        });
-});
-
-app.get("/next/:id", (req, res) => {
-    getNext(req.params.id)
-        .then(response => {
-            res.json(response);
-        })
-        .catch(err => {
-            console.log("Error in get Next: ", err);
-        });
-});
+// app.get("/previous/:id", (req, res) => {
+//     getPrevious(req.params.id)
+//         .then(response => {
+//             console.log("Response from getPrevious: ", response);
+//             res.json(response[0]);
+//         })
+//         .catch(err => {
+//             console.log("Error in getPrevious: ", err);
+//         });
+// });
+//
+// app.get("/next/:id", (req, res) => {
+//     getNext(req.params.id)
+//         .then(response => {
+//             res.json(response[0]);
+//         })
+//         .catch(err => {
+//             console.log("Error in get Next: ", err);
+//         });
+// });
 
 app.listen(8080, () => console.log("I'm listening."));
