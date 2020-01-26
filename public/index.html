@@ -55,7 +55,7 @@
             <div class='componentContainer'>
 
 
-                <a :href="'#' + leftId">
+                <a :href="'#' + leftId" v-if="leftId">
                 <i class="fas fa-chevron-left arrow" @click='previous'></i>
             </a>
                 <div class="imageContainer">
@@ -78,7 +78,7 @@
                     <button class='buttonbox' @click='addComment'>SUBMIT</button>
                 </form>
             </div>
-            <a :href="'#' + rightId">
+            <a :href="'#' + rightId" v-if="rightId">
             <i class="fas fa-chevron-right arrow"
             @click='next'></i>
         </a>

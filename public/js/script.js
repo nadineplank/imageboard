@@ -44,7 +44,10 @@
                 axios.get("/images/" + this.id).then(res => {
                     //we probably want to look at the response from the server
                     //if the response is a certain thing... close the modal
-                    if (res.data.length === "") {
+                    if (
+                        res.data.length === "" ||
+                        location.hash === "#" + null
+                    ) {
                         this.$emit("close");
                     } else {
                         this.username = res.data.username;
