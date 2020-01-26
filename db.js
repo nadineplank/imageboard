@@ -29,14 +29,6 @@ exports.getMoreImages = function(lastId) {
         .then(({ rows }) => rows);
 };
 
-// exports.getClickedImage = function(id) {
-//     return db
-//         .query(
-//             `SELECT url, username, title, description, id, (SELECT id FROM images WHERE id > $1 LIMIT 1) AS left_id, (SELECT id FROM images WHERE id < $1 ORDER BY id DESC LIMIT 1) AS right_id, (SELECT url FROM images WHERE id < $1 ORDER BY id DESC LIMIT 1) AS right_url FROM images WHERE id = $1`,
-//             [id]
-//         )
-//         .then(({ rows }) => rows);
-// };
 exports.getData = function(id) {
     return db
         .query(
@@ -45,37 +37,6 @@ exports.getData = function(id) {
         AS left_id,
         (SELECT id FROM images WHERE id < ${id} ORDER BY id DESC LIMIT 1) AS right_id
         FROM images WHERE id=${id}`
-        )
-        .then(({ rows }) => rows);
-};
-
-exports.getPrevious = function(id) {
-    return db
-        .query(
-            `SELECT id, url, title, username, description, (
-            SELECT id FROM images
-            WHERE id > $1
-            LIMIT 1
-        ) AS left_id FROM images
-        WHERE id > $1
-        LIMIT 1`,
-            [id]
-        )
-        .then(({ rows }) => rows);
-};
-
-exports.getNext = function(id) {
-    return db
-        .query(
-            `SELECT id, url, title, username, description (
-            SELECT id FROM images
-            WHERE id > $1
-            ORDER BY id DESC
-            LIMIT 1
-        ) AS right_id FROM images
-        WHERE id < $1
-        LIMIT 1`,
-            [id]
         )
         .then(({ rows }) => rows);
 };

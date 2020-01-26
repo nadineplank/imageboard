@@ -133,6 +133,7 @@ form {
 .componentContainer {
     display: grid;
     grid-template-columns: 0.5fr 3fr 6fr 0.5fr;
+    grid-template-rows: 2fr 1fr;
 }
 
 .imageContainer {

@@ -113,25 +113,4 @@ app.get("/more/:lastId", (req, res) => {
         });
 });
 
-// app.get("/previous/:id", (req, res) => {
-//     getPrevious(req.params.id)
-//         .then(response => {
-//             console.log("Response from getPrevious: ", response);
-//             res.json(response[0]);
-//         })
-//         .catch(err => {
-//             console.log("Error in getPrevious: ", err);
-//         });
-// });
-//
-// app.get("/next/:id", (req, res) => {
-//     getNext(req.params.id)
-//         .then(response => {
-//             res.json(response[0]);
-//         })
-//         .catch(err => {
-//             console.log("Error in get Next: ", err);
-//         });
-// });
-
 app.listen(8080, () => console.log("I'm listening."));
