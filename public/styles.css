@@ -120,14 +120,17 @@ form {
 }
 
 .component {
-    border: 2px solid black;
+    border-radius: 10px;
     background-color: white;
     position: fixed;
-    top: 20px;
-    right: 20px;
-    bottom: 20px;
-    left: 20px;
+    top: 40px;
+    right: 75px;
+    bottom: 40px;
+    left: 75px;
     padding: 25px;
+    -webkit-box-shadow: 0px 0px 45px -8px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: 0px 0px 45px -8px rgba(0, 0, 0, 0.75);
+    box-shadow: 0px 0px 45px -8px rgba(0, 0, 0, 0.75);
 }
 
 .componentContainer {
@@ -156,8 +159,16 @@ form {
     height: 100px;
     background-color: rgba(0, 0, 0, 0.1);
     border: none;
+    width: 300px;
 }
 
+.overlay {
+    background: rgba(0, 0, 0, 0.3);
+    top: 0px;
+    height: 100vh;
+    width: 100vw;
+    position: fixed;
+}
 #postedBy {
     font-size: 13px;
     color: dimgray;
@@ -205,4 +216,19 @@ form {
 }
 
 #moreButton {
+}
+
+/*NAV */
+.arrow-left {
+    position: absolute;
+    left: -50px;
+    font-size: 30px;
+    top: 45%;
+}
+
+.arrow-right {
+    position: absolute;
+    right: -50px;
+    font-size: 30px;
+    top: 45%;
 }

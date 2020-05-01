@@ -32,6 +32,7 @@
         </form>
 
             <h2>Latest Images</h2>
+
             <div class="container">
 
                 <div  v-for='i in images'>
@@ -40,50 +41,58 @@
                         <p class='title' id='title'>{{i.title}}</p>
                     </a>
                 </div>
-            </div>
-            <div v-if='lastId' id="more">
-                <button id='moreButton' @click='loadMore'>show more</button>
 
             </div>
+
+            <div v-if='lastId' id="more">
+                <button id='moreButton' @click='loadMore'>show more</button>
+            </div>
+
     </div>
+    
     <footer>Nadine Plank 2020 ©</footer>
 
     <script type="text/x-template" id="template">
-        <div class='component'>
-            <i @click='closeModal'class="fas fa-times"></i>
+        <div class='overlay'>
+            <div class='component'>
+                <i @click='closeModal'class="fas fa-times"></i>
 
-            <div class='componentContainer'>
+                <div class='componentContainer'>
 
+                    <i class="fas fa-chevron-left arrow-left" @click='previous'></i>
 
-                <a :href="'#' + leftId" v-if="leftId">
-                <i class="fas fa-chevron-left arrow" @click='previous'></i>
-            </a>
-                <div class="imageContainer">
-                    <img class='selected' :src="images">
-                    <h3 class='title'>{{title}}</h3>
-                    <p class='description'>description: {{description}}</p>
-                    <p class='username'>user: {{username}}</p>
+                    <div class="imageContainer">
+                        <img class='selected' :src="images">
+                        <h3 class='title'>{{title}}</h3>
+                        <p class='description'>description: {{description}}</p>
+                        <p class='username'>user: {{username}}</p>
+                        <a class='arrow':href="'#' + leftId" v-if="leftId">
+                        </a>
+                    </div>
+
+                    <div class="commentContainer">
+                        <div class='comment' v-for='c in comments'>
+                            <p>{{c.comment}}</p>
+                            <p id="postedBy" >posted by: {{c.username}}</p>
+                        </div>
+
+                        <form>
+                            <input  v-model='comment' type="text" name="comment" placeholder="comment" class='commentInput'>
+                            <input v-model='commentuser'class='buttonbox' type="text" name="user" placeholder="username">
+                            <button class='buttonbox' @click='addComment'>SUBMIT</button>
+                        </form>
+
+                    </div>
+
+                    <a :href="'#' + rightId" v-if="rightId">
+                        <i class="fas fa-chevron-right arrow-right"
+                        @click='next'></i>
+                    </a>
+
                 </div>
-
-            <div class="commentContainer">
-
-                <div class='comment' v-for='c in comments'>
-                    <p>{{c.comment}}</p>
-                    <p id="postedBy" >posted by: {{c.username}}</p>
-                </div>
-
-                <form>
-                    <input  v-model='comment' type="text" name="comment" placeholder="comment" class='commentInput'>
-                    <input v-model='commentuser'class='buttonbox' type="text" name="user" placeholder="username">
-                    <button class='buttonbox' @click='addComment'>SUBMIT</button>
-                </form>
             </div>
-            <a :href="'#' + rightId" v-if="rightId">
-            <i class="fas fa-chevron-right arrow"
-            @click='next'></i>
-        </a>
         </div>
-    </div>
+
     </script>
 
     <script src="/js/vue.js"></script>
