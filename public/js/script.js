@@ -70,10 +70,8 @@
             previous: function() {
                 var self = this;
                 var id = location.hash.slice(1);
-                console.log("Id for previous method:", id);
-                axios.get("/images/" + id).then(res => {
-                    console.log("response previous: ", res.data);
 
+                axios.get("/images/" + id).then(res => {
                     self.username = res.data.username;
                     self.images = res.data.url;
                     self.title = res.data.title;
@@ -83,9 +81,8 @@
             },
             next: function() {
                 var id = location.hash.slice(1);
-                console.log("id for next method: ", id);
+
                 axios.get("/images/" + id).then(res => {
-                    console.log("response next: ", res.data);
                     this.username = res.data.username;
                     this.images = res.data.url;
                     this.title = res.data.title;
@@ -115,7 +112,6 @@
             addEventListener("hashchange", function() {
                 self.selectedImage = location.hash.slice(1);
             });
-            console.log("mounted");
             axios.get("/images").then(res => {
                 this.images = res.data;
             });
@@ -131,7 +127,6 @@
             upload: function(e) {
                 var vueInstance = this;
                 e.preventDefault();
-                console.log("this: ", this);
 
                 // We need to use FormData to send a file to the server
                 var formData = new FormData();
@@ -143,7 +138,6 @@
                 axios
                     .post("/upload", formData)
                     .then(function(resp) {
-                        console.log("resp from POST /upload: ", resp);
                         vueInstance.images.unshift(resp.data);
                     })
                     .catch(function(err) {
@@ -151,8 +145,6 @@
                     });
             },
             handleChange: function(e) {
-                console.log("handleChange is running");
-                console.log("file: ", e.target.files[0]);
                 this.file = e.target.files[0];
             },
 
@@ -164,7 +156,7 @@
 
             loadMore: function() {
                 var lastId = this.images[this.images.length - 1].id;
-                console.log(lastId);
+
                 axios
                     .get("/more/" + lastId)
                     .then(res => {
