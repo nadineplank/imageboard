@@ -68,12 +68,12 @@
                              <!-- <p class='description'>description: {{description}}</p> -->
 
                             <a class='arrow':href="'#' + leftId" v-if="leftId">
-                        </div>
                         </a>
+                    <!-- </div> -->
                     </div>
 
                     <div class="commentContainer">
-                        <p class='username'>user: {{username}}</p> 
+                        <p class='username'>user: {{username}}</p>
                         <div class='comment' v-for='c in comments'>
                             <p>{{c.comment}}</p>
                             <p id="postedBy" >posted by: {{c.username}}</p>
