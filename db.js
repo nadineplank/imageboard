@@ -60,7 +60,6 @@ exports.insertComment = function(username, comment, image_id) {
 };
 
 exports.getComments = function(id) {
-    console.log("Result from getComments: ", id);
     return db
         .query(`SELECT comment, username FROM comments WHERE image_id=${id}`)
         .then(({ rows }) => rows);
