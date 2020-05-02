@@ -57,12 +57,17 @@
             <div class='component'>
                 <i @click='closeModal'class="fas fa-times"></i>
 
+<<<<<<< HEAD
                 <!-- <div class='componentContainer'> -->
+=======
+                <div class='componentContainer'>
+>>>>>>> 30e7aac41a892c59c3e7099fa49eba63c35c8606
 
                     <i class="fas fa-chevron-left arrow-left" @click='previous'></i>
 
                     <div class="imageContainer">
                         <img class='selected' :src="images">
+<<<<<<< HEAD
                          <!-- <div class='info-box'> -->
                             <!-- <h3 class='title'>{{title}}</h3> -->
                              <!-- <p class='description'>description: {{description}}</p> -->
@@ -74,12 +79,26 @@
 
                     <div class="commentContainer">
                         <p class='username'>user: {{username}}</p>
+=======
+                        <h3 class='title'>{{title}}</h3>
+                        <p class='description'>description: {{description}}</p>
+                        <p class='username'>user: {{username}}</p>
+                        <a class='arrow':href="'#' + leftId" v-if="leftId">
+                        </a>
+                    </div>
+
+                    <div class="commentContainer">
+>>>>>>> 30e7aac41a892c59c3e7099fa49eba63c35c8606
                         <div class='comment' v-for='c in comments'>
                             <p>{{c.comment}}</p>
                             <p id="postedBy" >posted by: {{c.username}}</p>
                         </div>
 
+<<<<<<< HEAD
                         <form class="commentfield">
+=======
+                        <form>
+>>>>>>> 30e7aac41a892c59c3e7099fa49eba63c35c8606
                             <input  v-model='comment' type="text" name="comment" placeholder="comment" class='commentInput'>
                             <input v-model='commentuser'class='buttonbox' type="text" name="user" placeholder="username">
                             <button class='buttonbox' @click='addComment'>SUBMIT</button>
@@ -92,10 +111,17 @@
                         @click='next'></i>
                     </a>
 
+<<<<<<< HEAD
                 <!-- </div> -->
             </div>
         </div>
 
+=======
+                </div>
+            </div>
+        </div>
+    
+>>>>>>> 30e7aac41a892c59c3e7099fa49eba63c35c8606
     </script>
 
     <script src="/js/vue.js"></script>

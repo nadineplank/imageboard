@@ -127,6 +127,7 @@ form {
 }
 
 .component {
+<<<<<<< HEAD
     display: grid;
     grid-template-columns: 13fr 8fr;
     grid-template-rows: 10vh 60vh 10vh 10vh;
@@ -143,6 +144,16 @@ form {
     bottom: 10vh;
     min-height: 600px;
     min-width: 70vw;
+=======
+    border-radius: 10px;
+    background-color: white;
+    position: fixed;
+    top: 40px;
+    right: 75px;
+    bottom: 40px;
+    left: 75px;
+    padding: 25px;
+>>>>>>> 30e7aac41a892c59c3e7099fa49eba63c35c8606
     -webkit-box-shadow: 0px 0px 45px -8px rgba(0, 0, 0, 0.75);
     -moz-box-shadow: 0px 0px 45px -8px rgba(0, 0, 0, 0.75);
     box-shadow: 0px 0px 45px -8px rgba(0, 0, 0, 0.75);
@@ -242,6 +253,7 @@ form {
 
 /*NAV */
 .arrow-left {
+<<<<<<< HEAD
     position: fixed;
     left: 7vw;
     font-size: 40px;
@@ -262,4 +274,17 @@ form {
 }
 .arrow-left:hover {
     color: grey;
+=======
+    position: absolute;
+    left: -50px;
+    font-size: 30px;
+    top: 45%;
+}
+
+.arrow-right {
+    position: absolute;
+    right: -50px;
+    font-size: 30px;
+    top: 45%;
+>>>>>>> 30e7aac41a892c59c3e7099fa49eba63c35c8606
 }
