@@ -39,11 +39,8 @@
                 });
             },
             modal: function() {
-                // another problem we need to deal with is of the user tries to go to an image that doesn't exist
                 this.comments = [];
                 axios.get("/images/" + this.id).then(res => {
-                    //we probably want to look at the response from the server
-                    //if the response is a certain thing... close the modal
                     if (
                         res.data.length === "" ||
                         location.hash === "#" + null
@@ -56,9 +53,6 @@
                         this.description = res.data.description;
                         this.leftId = res.data.left_id;
                         this.rightId = res.data.right_id;
-
-                        // this.leftId = res.data.left_id;
-                        // this.rightId = res.data.right_id;
                     }
                 });
                 axios.get("/comment/" + this.id).then(res => {
