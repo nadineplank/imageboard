@@ -22,7 +22,7 @@
 
 
 
-        <form>
+        <form class="uploadForm">
             <input v-model='title' type="text" name="title" placeholder="title">
             <input v-model='description' type="text" name="description" placeholder="description">
             <input v-model='username' type="text" name="username" placeholder="username">
@@ -59,7 +59,7 @@
 
                 <!-- <div class='componentContainer'> -->
 
-                    <i class="fas fa-chevron-left arrow-left" @click='previous'></i>
+
 
                     <div class="imageContainer">
                         <img class='selected' :src="images">
@@ -68,24 +68,27 @@
                              <!-- <p class='description'>description: {{description}}</p> -->
 
                             <a class='arrow':href="'#' + leftId" v-if="leftId">
+                                <i class="fas fa-chevron-left arrow-left" @click='previous'></i>
                         </a>
                     <!-- </div> -->
                     </div>
 
+                    <div class='username'>
+                        <p class='name'>user: {{username}}</p>
+                    </div>
                     <div class="commentContainer">
-                        <p class='username'>user: {{username}}</p>
                         <div class='comment' v-for='c in comments'>
                             <p>{{c.comment}}</p>
                             <p id="postedBy" >posted by: {{c.username}}</p>
                         </div>
 
+                    </div>
                         <form class="commentfield">
                             <input  v-model='comment' type="text" name="comment" placeholder="comment" class='commentInput'>
-                            <input v-model='commentuser'class='buttonbox' type="text" name="user" placeholder="username">
-                            <button class='buttonbox' @click='addComment'>SUBMIT</button>
+                            <input v-model='commentuser'class='cUsername' type="text" name="user" placeholder="username">
+                            <button class='submit' @click='addComment'>SEND</button>
                         </form>
 
-                    </div>
 
                     <a :href="'#' + rightId" v-if="rightId">
                         <i class="fas fa-chevron-right arrow-right"

@@ -51,12 +51,6 @@ button:hover {
     box-shadow: 0 5px 10px rgba(0, 0, 0, 0.4);
 }
 
-.buttonbox {
-    height: 50px;
-    align-self: flex-end;
-    margin: 15px;
-}
-
 h1 {
     font-family: "Unica One", cursive;
     text-align: center;
@@ -74,11 +68,12 @@ h3 {
     padding: 7px;
     font-family: "Unica One", cursive;
 }
-form {
+.uploadForm {
     display: flex;
     justify-content: center;
     margin: 30px;
 }
+
 .container {
     display: flex;
     flex-flow: row wrap;
@@ -121,21 +116,15 @@ form {
 
 /* MODAL */
 
-.selected {
-    grid-area: image;
-    min-height: 600px;
-}
-
 .component {
-<<<<<<< HEAD
     display: grid;
-    grid-template-columns: 13fr 8fr;
-    grid-template-rows: 10vh 60vh 10vh 10vh;
+    grid-template-columns: 63% 37%;
+    grid-template-rows: 10% 70% 20%;
     grid-template-areas:
-        "image profilname"
+        "image username"
         "image comments"
         "image commentfield";
-    /* border-radius: 10px; */
+
     background-color: white;
     position: fixed;
     top: 10vh;
@@ -144,17 +133,9 @@ form {
     bottom: 10vh;
     min-height: 600px;
     min-width: 70vw;
-=======
-    border-radius: 10px;
-    background-color: white;
-    position: fixed;
-    top: 40px;
-    right: 75px;
-    bottom: 40px;
-    left: 75px;
-    padding: 25px;
->>>>>>> 30e7aac41a892c59c3e7099fa49eba63c35c8606
-    -webkit-box-shadow: 0px 0px 45px -8px rgba(0, 0, 0, 0.75);
+    border-right: 2px solid whitesmoke;
+
+    webkit-box-shadow: 0px 0px 45px -8px rgba(0, 0, 0, 0.75);
     -moz-box-shadow: 0px 0px 45px -8px rgba(0, 0, 0, 0.75);
     box-shadow: 0px 0px 45px -8px rgba(0, 0, 0, 0.75);
 }
@@ -167,8 +148,23 @@ form {
 
 .imageContainer {
     grid-area: image;
-    /* min-height: 80vh; */
-    /* background: red; */
+    height: 100%;
+    width: 100%;
+    border-right: 2px solid whitesmoke;
+}
+
+.selected {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+}
+
+.username {
+    grid-area: username;
+    border-bottom: 1.98px solid whitesmoke;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .info-box {
@@ -179,20 +175,62 @@ form {
     background-color: rgba(0, 0, 0, 0.1);
     border-radius: 5px;
     padding: 8px;
+    margin: 10px;
 }
 
 .commentContainer {
     display: flex;
     flex-direction: column;
-    justify-content: flex-end;
-    grid-area: comment;
+    grid-area: comments;
+}
+
+.commentfield {
+    display: grid;
+    grid-template-columns: 80% 20%;
+    grid-template-rows: 50% 50%;
+    grid-template-areas:
+        "comment comment"
+        "cUsername submit";
+    border-top: 2px solid whitesmoke;
 }
 
 .commentInput {
-    height: 100px;
-    background-color: rgba(0, 0, 0, 0.1);
+    grid-area: comment;
+    border-bottom: solid 2px whitesmoke;
+    height: 100%;
+    padding-left: 10px;
+    margin: 0;
+    font-size: 12px;
+}
+.commentInput:focus {
+    background: whitesmoke;
+}
+
+.cUsername:focus {
+    background: whitesmoke;
+}
+
+.cUsername {
+    grid-area: cUsername;
     border: none;
-    width: 300px;
+    padding-left: 10px;
+    margin: 0;
+    font-size: 12px;
+}
+
+.submit {
+    grid-area: submit;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    background: white;
+    border: none;
+    border-left: 2px solid whitesmoke;
+}
+
+.submit:hover {
+    background-color: whitesmoke;
+    box-shadow: none;
 }
 
 .overlay {
@@ -253,18 +291,17 @@ form {
 
 /*NAV */
 .arrow-left {
-<<<<<<< HEAD
-    position: fixed;
-    left: 7vw;
-    font-size: 40px;
+    position: absolute;
+    left: -50px;
+    font-size: 30px;
     top: 45%;
     color: whitesmoke;
 }
 
 .arrow-right {
-    position: fixed;
-    right: 7vw;
-    font-size: 40px;
+    position: absolute;
+    right: -50px;
+    font-size: 30px;
     top: 45%;
     color: whitesmoke;
 }
@@ -274,17 +311,4 @@ form {
 }
 .arrow-left:hover {
     color: grey;
-=======
-    position: absolute;
-    left: -50px;
-    font-size: 30px;
-    top: 45%;
-}
-
-.arrow-right {
-    position: absolute;
-    right: -50px;
-    font-size: 30px;
-    top: 45%;
->>>>>>> 30e7aac41a892c59c3e7099fa49eba63c35c8606
 }
